@@ -9,19 +9,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="Processamento AGITEL FINALIZADO!&#10;&#10;Coluna Região OK!">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_09_2024_08_09_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_09_2024_08_09_[Changes]/utilities-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_09_09_2024_08_09__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_28_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_28__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_36_[Changes]/ConfiguracoesTema$Tema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_36_[Changes]/ConfiguracoesTema.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_36_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_12_09_2024_09_36__Changes_.xml" beforeDir="false" />
+    <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="PainelRenomearOrdenar corrigido">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_03_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_03__Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_49_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_49__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PainelRenomearOrdenar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelRenomearOrdenar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GerenciadorAbas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$ColumnSelectDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$MesclarArquivosWorker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelSubstituicaoSimples.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +86,7 @@
     &quot;Application.MescladorDePlanilhas.executor&quot;: &quot;Run&quot;,
     &quot;Application.TelaPrincipal.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;LE__Utilities&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
@@ -87,6 +104,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="TelaPrincipal" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="TelaPrincipal" />
@@ -95,14 +117,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
-        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -152,7 +166,8 @@
       <workItem from="1726593698143" duration="593000" />
       <workItem from="1726683098555" duration="718000" />
       <workItem from="1726755023973" duration="294000" />
-      <workItem from="1726833855845" duration="1877000" />
+      <workItem from="1726833855845" duration="2001000" />
+      <workItem from="1732209690439" duration="31000" />
     </task>
     <task id="LOCAL-00001" summary="Config">
       <option name="closed" value="true" />
@@ -314,7 +329,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726236963223</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="PainelRenomearOrdenar corrigido">
+      <option name="closed" value="true" />
+      <created>1726836902657</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1726836902657</updated>
+    </task>
+    <task id="LOCAL-00022" summary="PainelRenomearOrdenar corrigido">
+      <option name="closed" value="true" />
+      <created>1726836946785</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1726836946785</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,7 +362,8 @@
     <MESSAGE value="Processamento OK (ORGANIZADO)" />
     <MESSAGE value="Processamento OK (Falta apenas Col_Região)" />
     <MESSAGE value="Processamento AGITEL FINALIZADO!&#10;&#10;Coluna Região OK!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Processamento AGITEL FINALIZADO!&#10;&#10;Coluna Região OK!" />
+    <MESSAGE value="PainelRenomearOrdenar corrigido" />
+    <option name="LAST_COMMIT_MESSAGE" value="PainelRenomearOrdenar corrigido" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
