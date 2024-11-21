@@ -10,34 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="PainelRenomearOrdenar corrigido">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_03_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_03__Changes_.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_49_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_13_09_2024_10_49__Changes_.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/EditorListaClientes.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/GerenciadorAbas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$ColumnSelectDialog.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$MesclarArquivosWorker.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelProcessamentoAgitel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar$5.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelRenomearOrdenar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelSubstituicaoSimples.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid2708.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/leitura_agitel.xlsx" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -345,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726836946785</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="PainelRenomearOrdenar corrigido">
+      <option name="closed" value="true" />
+      <created>1732212457629</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1732212457629</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
