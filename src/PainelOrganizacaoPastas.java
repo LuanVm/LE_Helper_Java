@@ -15,33 +15,27 @@ import java.util.logging.Logger;
 
 public class PainelOrganizacaoPastas {
 
-    // Lista de clientes predefinidos
-    public static final String ARQUIVO_CLIENTES = "resources/clientes.txt";
-    public static final List<String> CLIENTES = new ArrayList<>();
-
-
+    private List<String> clientes;
     private JTextArea textAreaArquivos;
     private Map<File, File> historicoOrganizacao = new HashMap<>();
     private File directory;
-    private int numSecoesNomeCliente = 2;
     private JLabel statusLabel;
     private boolean aguardandoConfirmacao = false;
-
-    // Constantes para o número de seções
-    private static final int MIN_SECOES_NOME_CLIENTE = 1;
-    private static final int MAX_SECOES_NOME_CLIENTE = 3;
-
-    private static final Logger LOGGER = Logger.getLogger(PainelOrganizacaoPastas.class.getName());
-
-    private JCheckBox checkBoxCriarSubpastas;
-    private JCheckBox checkBoxJuntarArquivos;
-
-    // Componentes para ambas as opções
     private JPanel opcoesPanel;
     private JTextPane infoTextPane;
     private JTextPane infoTextPane2;
     private JTextPane infoLabel;
     private JTextPane infoLabel2;
+    private JCheckBox checkBoxCriarSubpastas;
+    private JCheckBox checkBoxJuntarArquivos;
+
+    private static final Logger LOGGER = Logger.getLogger(PainelOrganizacaoPastas.class.getName());
+
+    public PainelOrganizacaoPastas(List<String> clientes) {
+        this.clientes = clientes != null ? clientes : new ArrayList<>();
+        this.textAreaArquivos = new JTextArea(); // Inicializa o textArea se necessário
+        this.statusLabel = new JLabel("Pronto para organizar!");
+    }
 
     private Map<String, List<File>> gerarPreVisualizacao(File directory, List<String> excecoes) {
         Map<String, List<File>> clienteArquivos = new HashMap<>();
@@ -59,7 +53,6 @@ public class PainelOrganizacaoPastas {
 
         return clienteArquivos;
     }
-
 
     private void exibirPreVisualizacao(Map<String, List<File>> preVisualizacao, JTextArea textArea) {
         textArea.setText("");
@@ -136,13 +129,12 @@ public class PainelOrganizacaoPastas {
 
         // Criação do botão de editar lista de clientes
         JButton buttonEditarClientes = new JButton("Editar Lista de Clientes");
-        buttonEditarClientes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Instancia o editor de clientes e exibe a janela
-                EditorListaClientes editor = new EditorListaClientes(CLIENTES, textAreaArquivos);
-                editor.mostrarEditor();
+        buttonEditarClientes.addActionListener(e -> {
+            if (clientes == null) {
+                clientes = new ArrayList<>(); // Inicializa se for nulo
             }
+            EditorListaClientes editor = new EditorListaClientes(clientes, textAreaArquivos);
+            editor.mostrarEditor();
         });
 
         // Adiciona o botão ao painel de opções
@@ -156,10 +148,7 @@ public class PainelOrganizacaoPastas {
         gbcConfig.gridy = 2;
         gbcConfig.gridwidth = 3;
         checkBoxCriarSubpastas = new JCheckBox("Criar e organizar em subpastas", true);
-        //
-         //XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-         //
-         //
+
         inputPanel.add(checkBoxCriarSubpastas, gbcConfig);
 
         gbcConfig.gridx = 0;
@@ -485,13 +474,11 @@ public class PainelOrganizacaoPastas {
 
     // Extrai o nome do cliente com base no padrão estabelecido
     private String extrairNomeCliente(String nomeArquivo, List<String> excecoes) {
-        // Verifica se o nome do arquivo inicia com um cliente conhecido e tem um delimitador em seguida
-        for (String cliente : CLIENTES) {
+        for (String cliente : clientes) {
             if (nomeArquivo.startsWith(cliente + "_") || nomeArquivo.startsWith(cliente + " ")) {
                 return cliente;
             }
         }
-        // Caso contrário, retorna vazio
         return "";
     }
 
