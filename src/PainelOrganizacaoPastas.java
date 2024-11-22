@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class PainelOrganizacaoPastas {
 
     // Lista de clientes predefinidos
-    public static final String ARQUIVO_CLIENTES = "clientes.txt";
+    public static final String ARQUIVO_CLIENTES = "resources/clientes.txt";
     public static final List<String> CLIENTES = new ArrayList<>();
 
 
