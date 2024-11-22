@@ -11,6 +11,21 @@
   <component name="ChangeListManager">
     <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="PainelRenomearOrdenar corrigido">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clientes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/clientes.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EditorListaClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditorListaClientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TelaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TelaPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +77,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "deletionFromPopupRequiresConfirmation": "false",
     "git-widget-placeholder": "LE__Utilities",
+    "ignore.preview.features.used": "true",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/LUANVITOR/Desktop/Geral/00. Works/Livre_Escolha_Utilities",
@@ -334,7 +350,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732222328296</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="PainelRenomearOrdenar corrigido">
+      <option name="closed" value="true" />
+      <created>1732275215209</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1732275215209</updated>
+    </task>
+    <task id="LOCAL-00026" summary="PainelRenomearOrdenar corrigido">
+      <option name="closed" value="true" />
+      <created>1732275222287</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1732275222287</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

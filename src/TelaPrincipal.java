@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TelaPrincipal {
 
@@ -10,6 +11,7 @@ public class TelaPrincipal {
     private static JTextArea textAreaArquivos;
 
     public static void main(String[] args) {
+
         SwingUtilities.invokeLater(() -> {
             ConfiguracoesTema.loadConfig();
 
