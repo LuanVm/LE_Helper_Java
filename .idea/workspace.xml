@@ -9,16 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="Edição_lista_clientes_OK">
+    <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="update 3.0 - nata_edition">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EditorListaClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditorListaClientes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$4.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,30 +54,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.MescladorDePlanilhas.executor": "Run",
-    "Application.TelaPrincipal.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "LE__Utilities",
-    "ignore.preview.features.used": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/LUANVITOR/Desktop/Geral/00. Works/Livre_Escolha_Utilities",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2937853",
-    "settings.editor.selected.configurable": "project.propCompiler",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.MescladorDePlanilhas.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TelaPrincipal.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;LE__Utilities&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/LUANVITOR/Desktop/Geral/00. Works/Livre_Escolha_Utilities&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2937853&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -375,7 +367,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732278403978</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="update 3.0 - nata_edition">
+      <option name="closed" value="true" />
+      <created>1732286780751</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1732286780751</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +394,8 @@
     <MESSAGE value="Processamento AGITEL FINALIZADO!&#10;&#10;Coluna Região OK!" />
     <MESSAGE value="PainelRenomearOrdenar corrigido" />
     <MESSAGE value="Edição_lista_clientes_OK" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edição_lista_clientes_OK" />
+    <MESSAGE value="update 3.0 - nata_edition" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 3.0 - nata_edition" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
