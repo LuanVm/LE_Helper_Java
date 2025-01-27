@@ -10,7 +10,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6a21d4a-bbe7-414e-8daf-47e430d57c1e" name="Changes" comment="update 3.0 - nata_edition">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clientes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/clientes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/config.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ConfiguracoesTema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ConfiguracoesTema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EditorListaClientes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EditorListaClientes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GerenciadorAbas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GerenciadorAbas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PainelMesclaPlanilha.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelMesclaPlanilha.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelOrganizacaoPastas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PainelSubstituicaoSimples.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PainelSubstituicaoSimples.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TelaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TelaPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ConfiguracoesTema$Tema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ConfiguracoesTema$Tema.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ConfiguracoesTema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ConfiguracoesTema.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/EditorListaClientes.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/GerenciadorAbas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/GerenciadorAbas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$ColumnSelectDialog.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$ColumnSelectDialog.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$MesclarArquivosWorker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha$MesclarArquivosWorker.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelMesclaPlanilha.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelOrganizacaoPastas.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/PainelSubstituicaoSimples.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/PainelSubstituicaoSimples.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelaPrincipal$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/TelaPrincipal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/clientes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -375,7 +404,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732286780751</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="update 3.0 - nata_edition">
+      <option name="closed" value="true" />
+      <created>1732620407868</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1732620407868</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

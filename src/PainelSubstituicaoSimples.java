@@ -8,171 +8,153 @@ import java.util.Comparator;
 
 public class PainelSubstituicaoSimples {
 
-    private JTextArea textAreaArquivos;
+    private final JTextArea textAreaArquivos;
 
-    // Construtor que recebe a textAreaArquivos
     public PainelSubstituicaoSimples(JTextArea textAreaArquivos) {
         this.textAreaArquivos = textAreaArquivos;
     }
 
     public JPanel criarPainel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        JPanel painelPrincipal = new JPanel(new BorderLayout(10, 10));
+        painelPrincipal.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        // Painel para os campos de entrada
-        JPanel inputPanel = criarPainelInput();
-        JScrollPane scrollPaneArquivos = criarScrollPaneArquivos();
+        painelPrincipal.add(criarPainelInput(), BorderLayout.NORTH);
+        painelPrincipal.add(criarScrollPaneArquivos(), BorderLayout.CENTER);
 
-        // Adiciona os painéis à aba
-        panel.add(inputPanel, BorderLayout.NORTH);
-        panel.add(scrollPaneArquivos, BorderLayout.CENTER);
-
-        return panel;
+        return painelPrincipal;
     }
 
     private JPanel criarPainelInput() {
-        JPanel inputPanel = new JPanel(new GridBagLayout());
-        inputPanel.setBorder(new TitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Configurações de Renomeação", TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION, new Font("Arial", Font.BOLD, 12)));
+        JPanel painelEntrada = new JPanel(new GridBagLayout());
+        painelEntrada.setBorder(new TitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                "Configurações de Renomeação",
+                TitledBorder.LEFT,
+                TitledBorder.DEFAULT_POSITION,
+                new Font("Arial", Font.BOLD, 12)
+        ));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST;
 
-        // Pasta
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        JLabel labelPasta = new JLabel("Pasta:");
-        inputPanel.add(labelPasta, gbc);
+        // Adiciona os componentes no painel de entrada
+        JTextField textPasta = criarLinhaEntrada("Pasta:", painelEntrada, gbc, 0);
+        JTextField textOriginal = criarLinhaEntrada("Nome Original:", painelEntrada, gbc, 1);
+        JTextField textNova = criarLinhaEntrada("Alterar Para:", painelEntrada, gbc, 2);
 
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        JTextField textPasta = new JTextField(20);
-        inputPanel.add(textPasta, gbc);
-
-        gbc.gridx = 2;
-        gbc.weightx = 0.0;
+        // Botões
         JButton buttonSelecionar = TelaPrincipal.criarBotao("Selecionar Pasta");
-        inputPanel.add(buttonSelecionar, gbc);
-
-        // Nome original
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        JLabel labelOriginal = new JLabel("Nome original:");
-        inputPanel.add(labelOriginal, gbc);
-
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        JTextField textOriginal = new JTextField(20);
-        inputPanel.add(textOriginal, gbc);
-
-        gbc.gridx = 2;
-        gbc.weightx = 0.0;
-        inputPanel.add(new JLabel(""), gbc);
-
-        // Alterar para
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.weightx = 0.0;
-        JLabel labelNova = new JLabel("Alterar para:");
-        inputPanel.add(labelNova, gbc);
-
-        gbc.gridx = 1;
-        gbc.weightx = 1.0;
-        JTextField textNova = new JTextField(20);
-        inputPanel.add(textNova, gbc);
-
-        // Botão Renomear
-        gbc.gridx = 2;
-        gbc.gridy = 2;
-        gbc.weightx = 0.0;
         JButton buttonRenomear = TelaPrincipal.criarBotao("Renomear");
-        inputPanel.add(buttonRenomear, gbc);
 
-        // Label com a informação sobre caixa alta
+        adicionarBotao(buttonSelecionar, painelEntrada, gbc, 2, 0);
+        adicionarBotao(buttonRenomear, painelEntrada, gbc, 2, 2);
+
+        // Informações adicionais
+        JLabel labelInfo = new JLabel("Lembrando que a aplicação respeita caracteres em caixa alta.");
+        labelInfo.setForeground(Color.GRAY);
+
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 3;
-        gbc.anchor = GridBagConstraints.WEST;
-        JLabel labelCaseSensitive = new JLabel("Lembrando que a aplicação respeita caracteres em caixa alta.");
-        labelCaseSensitive.setForeground(Color.GRAY);
-        inputPanel.add(labelCaseSensitive, gbc);
+        painelEntrada.add(labelInfo, gbc);
 
-        // Ação do botão Selecionar
+        // Ações dos botões
         buttonSelecionar.addActionListener(e -> selecionarPasta(textPasta));
+        buttonRenomear.addActionListener(e -> renomearArquivos(textPasta, textOriginal, textNova, painelEntrada));
 
-        // Ação do botão Renomear
-        buttonRenomear.addActionListener(e -> renomearArquivos(textPasta, textOriginal, textNova, inputPanel));
+        return painelEntrada;
+    }
 
-        return inputPanel;
+    private JTextField criarLinhaEntrada(String labelText, JPanel painel, GridBagConstraints gbc, int linha) {
+        JLabel label = new JLabel(labelText);
+        gbc.gridx = 0;
+        gbc.gridy = linha;
+        gbc.weightx = 0;
+        painel.add(label, gbc);
+
+        JTextField textField = new JTextField(20);
+        gbc.gridx = 1;
+        gbc.weightx = 1.0;
+        painel.add(textField, gbc);
+
+        return textField;
+    }
+
+    private void adicionarBotao(JButton botao, JPanel painel, GridBagConstraints gbc, int coluna, int linha) {
+        gbc.gridx = coluna;
+        gbc.gridy = linha;
+        gbc.weightx = 0;
+        painel.add(botao, gbc);
     }
 
     private JScrollPane criarScrollPaneArquivos() {
-        textAreaArquivos = new JTextArea(10, 40);
         textAreaArquivos.setEditable(false);
-        JScrollPane scrollPaneArquivos = new JScrollPane(textAreaArquivos);
-        scrollPaneArquivos.setBorder(new TitledBorder(BorderFactory.createLineBorder(Color.GRAY), "Arquivos na pasta", TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION, new Font("Arial", Font.BOLD, 12)));
-        return scrollPaneArquivos;
+        JScrollPane scrollPane = new JScrollPane(textAreaArquivos);
+        scrollPane.setBorder(new TitledBorder(
+                BorderFactory.createLineBorder(Color.GRAY),
+                "Arquivos na Pasta",
+                TitledBorder.LEFT,
+                TitledBorder.DEFAULT_POSITION,
+                new Font("Arial", Font.BOLD, 12)
+        ));
+        return scrollPane;
     }
 
     private void selecionarPasta(JTextField textPasta) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        int returnValue = fileChooser.showOpenDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File selectedFile = fileChooser.getSelectedFile();
-            textPasta.setText(selectedFile.getAbsolutePath());
-            atualizarVisualizacaoArquivos(selectedFile);
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File pastaSelecionada = fileChooser.getSelectedFile();
+            textPasta.setText(pastaSelecionada.getAbsolutePath());
+            atualizarVisualizacaoArquivos(pastaSelecionada);
         }
     }
 
-    private void renomearArquivos(JTextField textPasta, JTextField textOriginal, JTextField textNova, JPanel inputPanel) {
-        String pasta = textPasta.getText();
-        String palavraNova = textNova.getText();
+    private void renomearArquivos(JTextField textPasta, JTextField textOriginal, JTextField textNova, JPanel painelEntrada) {
+        File diretorio = new File(textPasta.getText());
+        if (!diretorio.exists() || !diretorio.isDirectory()) {
+            exibirMensagem(painelEntrada, "Pasta inválida ou vazia.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String palavraAntiga = textOriginal.getText();
+        String palavraNova = textNova.getText();
+        File[] arquivos = diretorio.listFiles();
 
-        File directory = new File(pasta);
-        File[] files = directory.listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                if (file.isFile()) {
-                    String nomeArquivo = file.getName();
-                    String novoNome = nomeArquivo.replace(palavraAntiga, palavraNova);
-
-                    File novoArquivo = new File(directory, novoNome);
-                    if (!file.renameTo(novoArquivo)) {
-                        exibirMensagemErro(inputPanel, "Erro ao renomear: " + nomeArquivo);
+        if (arquivos != null) {
+            boolean erroAoRenomear = false;
+            for (File arquivo : arquivos) {
+                if (arquivo.isFile()) {
+                    String novoNome = arquivo.getName().replace(palavraAntiga, palavraNova);
+                    if (!arquivo.renameTo(new File(diretorio, novoNome))) {
+                        erroAoRenomear = true;
                     }
                 }
             }
-            exibirMensagemSucesso(inputPanel, "Renomeação concluída!");
-            atualizarVisualizacaoArquivos(directory);
-        } else {
-            exibirMensagemErro(inputPanel, "Pasta não encontrada ou vazia.");
+
+            String mensagem = erroAoRenomear ? "Renomeação concluída com erros." : "Renomeação concluída!";
+            exibirMensagem(painelEntrada, mensagem, erroAoRenomear ? JOptionPane.WARNING_MESSAGE : JOptionPane.INFORMATION_MESSAGE);
+            atualizarVisualizacaoArquivos(diretorio);
         }
     }
 
-    private void exibirMensagemErro(Component parentComponent, String mensagem) {
-        JOptionPane.showMessageDialog(parentComponent, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
-    }
-
-    private void exibirMensagemSucesso(Component parentComponent, String mensagem) {
-        JOptionPane.showMessageDialog(parentComponent, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    private void atualizarVisualizacaoArquivos(File directory) {
-        File[] files = directory.listFiles();
+    private void atualizarVisualizacaoArquivos(File diretorio) {
+        File[] arquivos = diretorio.listFiles();
         textAreaArquivos.setText("");
-        if (files != null) {
-            Arrays.sort(files, Comparator.comparing(File::getName));
-            for (File file : files) {
-                if (file.isFile()) {
-                    textAreaArquivos.append(file.getName() + "\n");
+
+        if (arquivos != null) {
+            Arrays.sort(arquivos, Comparator.comparing(File::getName));
+            for (File arquivo : arquivos) {
+                if (arquivo.isFile()) {
+                    textAreaArquivos.append(arquivo.getName() + "\n");
                 }
             }
         }
+    }
+
+    private void exibirMensagem(Component parent, String mensagem, int tipo) {
+        JOptionPane.showMessageDialog(parent, mensagem, "Mensagem", tipo);
     }
 }

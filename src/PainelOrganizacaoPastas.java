@@ -2,20 +2,19 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.*;
+import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.nio.file.Path;
+import java.nio.file.Files;
 
 public class PainelOrganizacaoPastas {
 
-    private List<String> clientes;
+    private Map<String, String> clientes;  // Usando Map para armazenar clientes
     private JTextArea textAreaArquivos;
     private Map<File, File> historicoOrganizacao = new HashMap<>();
     private File directory;
@@ -31,29 +30,48 @@ public class PainelOrganizacaoPastas {
 
     private static final Logger LOGGER = Logger.getLogger(PainelOrganizacaoPastas.class.getName());
 
-    public PainelOrganizacaoPastas(List<String> clientes) {
-        this.clientes = clientes != null ? clientes : new ArrayList<>();
-        this.textAreaArquivos = new JTextArea(); // Inicializa o textArea se necessário
+    public PainelOrganizacaoPastas() {
+        this.clientes = carregarClientesDoArquivo();  // Carrega clientes diretamente do arquivo
+        this.textAreaArquivos = new JTextArea();
         this.statusLabel = new JLabel("Pronto para organizar!");
+        this.historicoOrganizacao = new HashMap<>();
     }
 
-    private Map<String, List<File>> gerarPreVisualizacao(File directory, List<String> excecoes) {
-        Map<String, List<File>> clienteArquivos = new HashMap<>();
+    public PainelOrganizacaoPastas(JTextArea textAreaArquivos) {
+        this.clientes = carregarClientesDoArquivo(); // Carrega os clientes aqui também
+        this.textAreaArquivos = textAreaArquivos;
+        this.statusLabel = new JLabel("Pronto para organizar!");
+        this.infoLabel = new JTextPane();
+        this.infoLabel.setEditable(false);
+        this.infoLabel.setOpaque(false);
+        this.infoLabel.setContentType("text/html");
+        this.infoLabel2 = new JTextPane();
+        this.infoLabel2.setEditable(false);
+        this.infoLabel2.setOpaque(false);
+        this.infoLabel2.setContentType("text/html");
+    }
 
-        for (File file : directory.listFiles()) {
-            if (file.isFile()) {
-                String nomeArquivo = file.getName();
-                String nomeCliente = extrairNomeCliente(nomeArquivo, excecoes);
+    // Método para carregar os clientes a partir do arquivo .properties
+    private Map<String, String> carregarClientesDoArquivo() {
+        Map<String, String> clientesMap = new HashMap<>();
+        File arquivoClientes = new File(EditorListaClientes.ARQUIVO_CLIENTES);  // Caminho para o arquivo clientes.properties
 
-                if (!nomeCliente.isEmpty()) {
-                    clienteArquivos.computeIfAbsent(nomeCliente, k -> new ArrayList<>()).add(file);
-                }
+        try (InputStream input = new FileInputStream(arquivoClientes)) {
+            Properties prop = new Properties();
+            prop.load(input);  // Carrega as propriedades do arquivo
+
+            // Adiciona todos os clientes ao mapa
+            for (String cliente : prop.stringPropertyNames()) {
+                clientesMap.put(cliente, prop.getProperty(cliente));  // Adiciona o cliente ao mapa
             }
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, "Erro ao carregar clientes do arquivo: " + EditorListaClientes.ARQUIVO_CLIENTES, ex);
         }
 
-        return clienteArquivos;
+        return clientesMap;
     }
 
+    // Exibe a pré-visualização dos arquivos e clientes
     private void exibirPreVisualizacao(Map<String, List<File>> preVisualizacao, JTextArea textArea) {
         textArea.setText("");
         for (Map.Entry<String, List<File>> entry : preVisualizacao.entrySet()) {
@@ -67,22 +85,62 @@ public class PainelOrganizacaoPastas {
         }
     }
 
-    public PainelOrganizacaoPastas(JTextArea textAreaArquivos) {
-        this.textAreaArquivos = textAreaArquivos;
-        this.statusLabel = new JLabel("Pronto para organizar!");
-        this.infoLabel = new JTextPane();
-        this.infoLabel.setEditable(false);
-        this.infoLabel.setOpaque(false);
-        this.infoLabel.setContentType("text/html");
-        this.infoLabel2 = new JTextPane();
-        this.infoLabel2.setEditable(false);
-        this.infoLabel2.setOpaque(false);
-        this.infoLabel2.setContentType("text/html");
+    // Atualiza a visualização dos arquivos na área de texto
+    private void atualizarVisualizacaoArquivos(File pastaSelecionada) {
+        if (pastaSelecionada == null || !pastaSelecionada.exists()) {
+            textAreaArquivos.setText("Nenhuma pasta selecionada.");
+            return;
+        }
+
+        StringBuilder conteudo = new StringBuilder();
+        // Itera sobre os arquivos na pasta selecionada
+        for (File file : Objects.requireNonNull(pastaSelecionada.listFiles())) {
+            // Adiciona o nome de cada arquivo ao conteúdo
+            conteudo.append(file.getName()).append("\n");
+        }
+        // Exibe os arquivos na área de texto
+        textAreaArquivos.setText(conteudo.toString());
+        statusLabel.setText("Arquivos na pasta atualizados.");
+    }
+
+    // Método para gerar uma pré-visualização dos arquivos na pasta
+    private Map<String, List<File>> gerarPreVisualizacao(File directory) {
+        Map<String, List<File>> clienteArquivos = new HashMap<>();
+        File[] arquivos = directory.listFiles();
+
+        if (arquivos != null) {
+            for (File arquivo : arquivos) {
+                if (arquivo.isFile()) {
+                    // Extrai o nome do cliente baseado no nome do arquivo
+                    String nomeCliente = extrairNomeCliente(arquivo.getName());
+                    if (!nomeCliente.isEmpty()) {
+                        // Agrupa os arquivos pelo nome do cliente
+                        clienteArquivos.computeIfAbsent(nomeCliente, k -> new ArrayList<>()).add(arquivo);
+                    }
+                }
+            }
+        }
+        return clienteArquivos;
+    }
+
+    // Extrai o nome do cliente com base no nome do arquivo
+    private String extrairNomeCliente(String nomeArquivo) {
+        if (clientes == null || clientes.isEmpty()) {
+            return "";  // Retorna vazio se não houver clientes
+        }
+        for (Map.Entry<String, String> entry : clientes.entrySet()) {
+            String cliente = entry.getKey();  // Chave do Map
+            // Verifica se o nome do arquivo começa com o nome do cliente seguido de "_" ou espaço
+            if (nomeArquivo.startsWith(cliente + "_") || nomeArquivo.startsWith(cliente + " ")) {
+                return cliente;
+            }
+        }
+        return "";  // Retorna vazio se nenhum cliente for encontrado
     }
 
     public JPanel criarPainel() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        JPanel painelPrincipal  = new JPanel(new BorderLayout());
+        painelPrincipal .setBorder(new EmptyBorder(20, 20, 20, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(4, 4, 4, 4);
@@ -91,7 +149,6 @@ public class PainelOrganizacaoPastas {
 
         // Opções de organização (painel único)
         opcoesPanel = new JPanel(new GridBagLayout());
-        //opcoesPanel.setBorder(new TitledBorder("Opções de Organização"));
 
         GridBagConstraints gbcConfig = new GridBagConstraints();
         gbcConfig.insets = new Insets(5, 5, 5, 5);
@@ -123,17 +180,20 @@ public class PainelOrganizacaoPastas {
         gbc.gridx = 2;
         gbc.weightx = 0.0;
         JButton buttonSelecionar = TelaPrincipal.criarBotao("Selecionar Pasta");
-        buttonSelecionar.setToolTipText("Clique para selecionar a pasta que deseja organizar"); // Adiciona tooltip
+        buttonSelecionar.setToolTipText("Clique para selecionar a pasta que deseja organizar");
         inputPanel.add(buttonSelecionar, gbc);
-        JTextField textExcecoes = new JTextField(0);
 
         // Criação do botão de editar lista de clientes
         JButton buttonEditarClientes = new JButton("Editar Lista de Clientes");
         buttonEditarClientes.addActionListener(e -> {
             if (clientes == null) {
-                clientes = new ArrayList<>(); // Inicializa se for nulo
+                clientes = new HashMap<>(); // Inicializa a lista se for nula
             }
-            EditorListaClientes editor = new EditorListaClientes(clientes, textAreaArquivos);
+
+            EditorListaClientes editor = new EditorListaClientes(clientes, textAreaArquivos, () -> {
+                atualizarVisualizacaoArquivos(directory); // Atualiza a visualização
+                statusLabel.setText("Lista de clientes atualizada.");
+            });
             editor.mostrarEditor();
         });
 
@@ -148,7 +208,6 @@ public class PainelOrganizacaoPastas {
         gbcConfig.gridy = 2;
         gbcConfig.gridwidth = 3;
         checkBoxCriarSubpastas = new JCheckBox("Criar e organizar em subpastas", true);
-
         inputPanel.add(checkBoxCriarSubpastas, gbcConfig);
 
         gbcConfig.gridx = 0;
@@ -199,7 +258,6 @@ public class PainelOrganizacaoPastas {
         JButton buttonOrganizar = TelaPrincipal.criarBotao("Organizar");
         inputPanel.add(buttonOrganizar, gbc);
 
-
         // Painel para exibir a área de texto dos arquivos e a pré-visualização
         JPanel painelInferior = new JPanel(new GridBagLayout()); // GridBagLayout para melhor controle do layout
 
@@ -238,8 +296,8 @@ public class PainelOrganizacaoPastas {
         painelInferior.add(painelPreVisualizacao, gbc);
 
         // Adiciona os painéis à aba
-        panel.add(inputPanel, BorderLayout.NORTH);
-        panel.add(painelInferior, BorderLayout.CENTER);
+        painelPrincipal .add(inputPanel, BorderLayout.NORTH);
+        painelPrincipal .add(painelInferior, BorderLayout.CENTER);
 
         // Painel para os botões e o status
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -249,7 +307,7 @@ public class PainelOrganizacaoPastas {
 
         // Adiciona o JLabel de status abaixo dos botões
         buttonPanel.add(statusLabel);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
+        painelPrincipal .add(buttonPanel, BorderLayout.SOUTH);
 
         // Ação do botão Selecionar
         buttonSelecionar.addActionListener(new ActionListener() {
@@ -270,14 +328,11 @@ public class PainelOrganizacaoPastas {
             }
         });
 
-        // Ação do botão Organizar (adaptada para as novas funcionalidades)
+        // Ação do botão Organizar
         buttonOrganizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String pasta = textPasta.getText();
-                String excecoesStr = textExcecoes.getText();
-                List<String> excecoes = Arrays.asList(excecoesStr.split(","));
-
                 directory = new File(pasta);
                 if (directory.exists() && directory.isDirectory()) {
                     File[] files = directory.listFiles();
@@ -288,39 +343,34 @@ public class PainelOrganizacaoPastas {
                         return;
                     }
 
-                    if (aguardandoConfirmacao) {
-                        // Confirmação recebida, prossegue com a organização
+                    if (checkBoxCriarSubpastas.isSelected()) {
                         JProgressBar progressBar = new JProgressBar(0, files.length);
                         progressBar.setStringPainted(true);
-
-                        if (checkBoxCriarSubpastas.isSelected()) {
-                            organizarArquivos(directory, excecoes, progressBar);
-                        } else if (checkBoxJuntarArquivos.isSelected()) {
-                            juntarArquivosEmSubpastas(directory, progressBar);
-                        }
-
-                        buttonOrganizar.setText("Organizar");
-                        buttonReverter.setText("Reverter");
-                        aguardandoConfirmacao = false;
+                        organizarArquivos(directory, progressBar);
+                        atualizarVisualizacaoArquivos(directory);
                         statusLabel.setText("Organização concluída com sucesso!");
-                        atualizarVisualizacaoArquivos(directory); // Atualiza a exibição dos arquivos organizados
+                    } else if (checkBoxJuntarArquivos.isSelected()) {
+                        // Juntar arquivos em subpastas sem confirmação
+                        JProgressBar progressBar = new JProgressBar(0, files.length);
+                        progressBar.setStringPainted(true);
+                        juntarArquivosEmSubpastas(directory, progressBar);
+                        atualizarVisualizacaoArquivos(directory);
+                        statusLabel.setText("Arquivos juntados na pasta raiz com sucesso!");
+                    } else {
+                        // Gera pré-visualização sem fazer alterações
+                        Map<String, List<File>> preVisualizacao = gerarPreVisualizacao(directory);
+                        exibirPreVisualizacao(preVisualizacao, textAreaArquivos);
 
+                        // Atualiza os botões
+                        buttonOrganizar.setText("Confirmar Alt.");
+                        buttonReverter.setText("Cancelar");
+                        aguardandoConfirmacao = true;
                     }
-
-                    // Primeira vez que o botão é clicado, gera a pré-visualização e pede confirmação
-                    Map<String, List<File>> preVisualizacao = gerarPreVisualizacao(directory, excecoes);
-                    exibirPreVisualizacao(preVisualizacao, textAreaArquivos); // Exibe no painel de arquivos
-
-                    buttonOrganizar.setText("Confirmar Alt.");
-                    buttonReverter.setText("Cancelar");
-                    aguardandoConfirmacao = true;
-
                 } else {
                     statusLabel.setText("Pasta não encontrada ou inválida.");
                 }
             }
         });
-
 
         // Ação do botão Reverter
         buttonReverter.addActionListener(new ActionListener() {
@@ -345,7 +395,6 @@ public class PainelOrganizacaoPastas {
                         if (checkBoxCriarSubpastas.isSelected()) {
                             reverterUltimaOrganizacao(directory);
                         } else if (checkBoxJuntarArquivos.isSelected()) {
-                            // Lógica para reverter a junção de arquivos (implementar conforme necessário)
                             statusLabel.setText("Reversão da junção de arquivos não implementada.");
                         }
 
@@ -360,6 +409,10 @@ public class PainelOrganizacaoPastas {
                     } else {
                         statusLabel.setText("Nenhuma organização realizada para reverter.");
                     }
+
+                    // Reseta os botões para o estado original após reversão
+                    buttonOrganizar.setText("Organizar");
+                    buttonReverter.setText("Reverter");
                 }
             }
         });
@@ -392,94 +445,98 @@ public class PainelOrganizacaoPastas {
         checkBoxCriarSubpastas.addActionListener(checkBoxListener);
         checkBoxJuntarArquivos.addActionListener(checkBoxListener);
 
-        return panel;
+        return painelPrincipal ;
     }
 
-    // Metodo para organizar arquivos em diretórios
-    private void organizarArquivos(File directory, List<String> excecoes, JProgressBar progressBar) {
-        Map<String, List<File>> clienteArquivos = gerarPreVisualizacao(directory, excecoes);
+    // Método para organizar arquivos em diretórios
+    private void organizarArquivos(File directory, JProgressBar progressBar) {
+        Map<String, String> clientesMap = carregarClientesDoArquivo();
+        Map<String, List<File>> clienteArquivos = gerarPreVisualizacao(directory);
         historicoOrganizacao.clear();
-        int pastasCriadas = 0;
-        int arquivosMovidos = 0;
-        int arquivosIgnorados = 0;
+
+        int totalArquivos = clienteArquivos.values().stream().mapToInt(List::size).sum();
+        progressBar.setMaximum(totalArquivos); // Inicializa o progresso
+        int pastasCriadas = 0, arquivosMovidos = 0, arquivosIgnorados = 0;
 
         for (Map.Entry<String, List<File>> entry : clienteArquivos.entrySet()) {
             String nomePasta = entry.getKey();
-            File novaPasta = new File(directory, nomePasta);
 
-            try {
-                if (!novaPasta.exists() && !novaPasta.mkdir()) { // Verifica se a pasta já existe ou se pode ser criada
-                    throw new IOException("Erro ao criar a pasta: " + nomePasta);
+            if (clientesMap.containsKey(nomePasta)) {
+                File novaPasta = new File(directory, nomePasta);
+
+                if (!novaPasta.exists() && novaPasta.mkdir()) {
+                    pastasCriadas++;
                 }
 
                 for (File arquivo : entry.getValue()) {
+                    if (arquivo.isHidden() || "desktop.ini".equalsIgnoreCase(arquivo.getName())) {
+                        arquivosIgnorados++;
+                        continue;
+                    }
+
                     try {
                         File novoArquivo = new File(novaPasta, arquivo.getName());
+                        if (novoArquivo.exists()) {
+                            String novoNome = gerarNomeUnico(novoArquivo);
+                            novoArquivo = new File(novaPasta, novoNome);
+                        }
                         Files.move(arquivo.toPath(), novoArquivo.toPath());
                         historicoOrganizacao.put(novoArquivo, arquivo);
                         arquivosMovidos++;
                     } catch (IOException e) {
-                        // Tratamento de erro mais específico
-                        String mensagemErro = "Erro ao mover o arquivo: " + arquivo.getName() + " para " + novaPasta.getAbsolutePath() + "\n" +
-                                "Motivo: " + e.getMessage();
-                        JOptionPane.showMessageDialog(null, mensagemErro, "Erro ao Mover Arquivo", JOptionPane.ERROR_MESSAGE);
-                        LOGGER.log(Level.SEVERE, mensagemErro, e); // Log do erro
+                        LOGGER.log(Level.SEVERE, "Erro ao mover o arquivo: " + arquivo.getName(), e);
                         arquivosIgnorados++;
                     }
+                    progressBar.setValue(progressBar.getValue() + 1);
                 }
-            } catch (IOException ex) {
-                // Tratamento de erro ao criar a pasta
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro ao Criar Pasta", JOptionPane.ERROR_MESSAGE);
-                LOGGER.log(Level.SEVERE, "Erro ao criar a pasta: " + nomePasta, ex); // Log do erro
+            } else {
+                arquivosIgnorados += entry.getValue().size();
+                progressBar.setValue(progressBar.getValue() + entry.getValue().size());
             }
-
-            progressBar.setValue(progressBar.getValue() + entry.getValue().size());
         }
 
-        // Atualiza a mensagem de status com o resultado da organização
         statusLabel.setText("Organização completa! Pastas criadas: " + pastasCriadas +
                 ", Arquivos movidos: " + arquivosMovidos +
                 ", Arquivos ignorados: " + arquivosIgnorados);
     }
 
-    // Metodo para reverter a última organização realizada
+    // Gera um nome único para evitar conflitos
+    private String gerarNomeUnico(File arquivo) {
+        String nomeBase = arquivo.getName();
+        String extensao = "";
+        int pontoIndex = nomeBase.lastIndexOf(".");
+        if (pontoIndex > 0) {
+            extensao = nomeBase.substring(pontoIndex);
+            nomeBase = nomeBase.substring(0, pontoIndex);
+        }
+        int contador = 1;
+        File novoArquivo;
+        do {
+            novoArquivo = new File(arquivo.getParent(), nomeBase + "_" + contador + extensao);
+            contador++;
+        } while (novoArquivo.exists());
+        return novoArquivo.getName();
+    }
+
+    // Método para reverter a última organização realizada
     private void reverterUltimaOrganizacao(File directory) {
         for (Map.Entry<File, File> entry : historicoOrganizacao.entrySet()) {
             File arquivoNovo = entry.getKey();
             File arquivoAntigo = entry.getValue();
 
             try {
+                // Move o arquivo de volta para o local original
                 Files.move(arquivoNovo.toPath(), arquivoAntigo.toPath());
-                arquivoNovo.getParentFile().delete(); // Deleta a pasta se ela estiver vazia após mover o arquivo
+                // Remove a pasta se ela estiver vazia após o movimento do arquivo
+                arquivoNovo.getParentFile().delete();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        // Atualiza a mensagem de status após a reversão
+        // Atualiza o status após a reversão
         statusLabel.setText("Reversão concluída com sucesso!");
-        atualizarVisualizacaoArquivos(directory); // Atualiza a visualização após a reversão
-    }
-
-    // Atualiza a visualização dos arquivos na área de texto
-    private void atualizarVisualizacaoArquivos(File pastaSelecionada) {
-        StringBuilder conteudo = new StringBuilder();
-        for (File file : Objects.requireNonNull(pastaSelecionada.listFiles())) {
-            conteudo.append(file.getName()).append("\n");
-        }
-        textAreaArquivos.setText(conteudo.toString());
-
-        // Adiciona uma mensagem de status indicando que a atualização foi concluída
-        statusLabel.setText("Arquivos na pasta atualizados.");
-    }
-
-    // Extrai o nome do cliente com base no padrão estabelecido
-    private String extrairNomeCliente(String nomeArquivo, List<String> excecoes) {
-        for (String cliente : clientes) {
-            if (nomeArquivo.startsWith(cliente + "_") || nomeArquivo.startsWith(cliente + " ")) {
-                return cliente;
-            }
-        }
-        return "";
+        // Atualiza a visualização dos arquivos após a reversão
+        atualizarVisualizacaoArquivos(directory);
     }
 
     private void juntarArquivosEmSubpastas(File directory, JProgressBar progressBar) {
@@ -511,7 +568,6 @@ public class PainelOrganizacaoPastas {
                 LOGGER.log(Level.SEVERE, "Erro ao excluir a pasta: " + dir.getAbsolutePath(), e);
             }
         }
-
         atualizarVisualizacaoArquivos(directory);
         statusLabel.setText("Arquivos juntados na pasta raiz com sucesso!");
     }
@@ -531,3 +587,4 @@ public class PainelOrganizacaoPastas {
         }
     }
 }
+

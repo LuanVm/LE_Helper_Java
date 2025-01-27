@@ -3,132 +3,184 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TelaPrincipal {
 
     private static JFrame frame;
     private static JTextArea textAreaArquivos;
+    private static Map<String, String> clientes;
+    private static EditorListaClientes editorListaClientes;
 
     public static void main(String[] args) {
-
         SwingUtilities.invokeLater(() -> {
-            ConfiguracoesTema.loadConfig();
-
-            JPanel splashPanel = createSplashPanel();
-
-            JWindow splashScreen = new JWindow();
-            splashScreen.getContentPane().add(splashPanel);
-            splashScreen.setSize(140, 80);
-            splashScreen.setLocationRelativeTo(null);
-            splashScreen.setVisible(true);
-
-            createAndShowFrame();
-
-            // Redesenha o frame sem usar Timer
-            frame.revalidate();
-            frame.repaint();
-
-            splashScreen.dispose();
+            ConfiguracoesTema.carregarConfiguracao();
+            mostrarSplashScreen();
+            inicializarClientes();
+            criarJanelaPrincipal();
         });
     }
 
-    private static JPanel createSplashPanel() {
-        JPanel splashPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                try {
-                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    /**
+     * Exibe a splash screen durante o carregamento da aplicação.
+     */
+    private static void mostrarSplashScreen() {
+        JPanel splashPanel = criarPainelSplash();
+        JWindow splashScreen = new JWindow();
+        splashScreen.getContentPane().add(splashPanel);
+        splashScreen.setSize(140, 80);
+        splashScreen.setLocationRelativeTo(null);
+        splashScreen.setVisible(true);
 
-                    GradientPaint gp = new GradientPaint(0, 0, new Color(0x4CAF50),
-                            0, getHeight(), new Color(0x2E8B57));
-                    g2.setPaint(gp);
+        // Simula o tempo de carregamento
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+        }
 
-                    int[] xPoints = {0, getWidth() / 2, getWidth()};
-                    int[] yPoints = {0, getHeight(), 0};
-                    g2.fillPolygon(xPoints, yPoints, 3);
-                } finally {
-                    g2.dispose(); // Libera o recurso
-                }
-            }
-        };
-
-        JLabel loadingLabel = new JLabel("Carregando...", SwingConstants.CENTER);
-        loadingLabel.setFont(new Font("Open Sans", Font.BOLD, 14));
-        loadingLabel.setForeground(Color.WHITE);
-
-        splashPanel.setLayout(new BorderLayout());
-        splashPanel.add(loadingLabel, BorderLayout.CENTER);
-
-        return splashPanel;
+        splashScreen.dispose();
     }
 
-    private static void createAndShowFrame() {
+    /**
+     * Inicializa a lista de clientes e carrega do arquivo.
+     */
+    private static void inicializarClientes() {
+        clientes = new HashMap<>();
+        editorListaClientes = new EditorListaClientes(clientes, null, null);
+        editorListaClientes.carregarClientesDoArquivo();
+    }
+
+    /**
+     * Cria a janela principal da aplicação.
+     */
+    private static void criarJanelaPrincipal() {
         frame = new JFrame("Livre Escolha - Utilities");
-
-        setFrameIcon();
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(1280, 720));
 
+        // Configura o ícone da aplicação
+        configurarIconeJanela();
+
+        // Configura os componentes da janela
         textAreaArquivos = new JTextArea(10, 40);
         textAreaArquivos.setEditable(false);
 
         GerenciadorAbas gerenciadorAbas = new GerenciadorAbas(textAreaArquivos);
 
+        // Configuração do tema
         ConfiguracoesTema configuracoesTema = new ConfiguracoesTema();
-        JDialog dialogConfiguracoes = createDialog(frame, "Configurações", configuracoesTema.getPainelConfiguracoes());
+        JDialog dialogConfiguracoes = criarDialogo(frame, "Configurações", configuracoesTema.getPainelConfiguracoes());
 
         JButton botaoTema = criarBotao("Temas");
         botaoTema.addActionListener(e -> dialogConfiguracoes.setVisible(true));
 
-        JPanel rodapePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        rodapePanel.add(botaoTema);
-        frame.add(rodapePanel, BorderLayout.SOUTH);
+        JPanel painelRodape = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        painelRodape.add(botaoTema);
 
+        frame.add(painelRodape, BorderLayout.SOUTH);
         frame.add(gerenciadorAbas.getMainTabbedPane(), BorderLayout.CENTER);
 
         frame.pack();
         frame.setVisible(true);
     }
 
-    private static void setFrameIcon() {
-        BufferedImage originalImage = loadImage("/logo.png");
-        if (originalImage != null) {
-            int newWidth = 16;
-            int newHeight = 16;
-            Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-            BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = resizedImage.createGraphics();
-            g2d.drawImage(scaledImage, 0, 0, null);
-            g2d.dispose();
-            frame.setIconImage(resizedImage);
+    /**
+     * Cria o painel de splash screen.
+     *
+     * @return o painel configurado.
+     */
+    private static JPanel criarPainelSplash() {
+        JPanel splashPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                desenharBackgroundGradiente((Graphics2D) g);
+            }
+        };
+
+        JLabel labelCarregando = new JLabel("Carregando...", SwingConstants.CENTER);
+        labelCarregando.setFont(new Font("Open Sans", Font.BOLD, 14));
+        labelCarregando.setForeground(Color.WHITE);
+
+        splashPanel.setLayout(new BorderLayout());
+        splashPanel.add(labelCarregando, BorderLayout.CENTER);
+
+        return splashPanel;
+    }
+
+    /**
+     * Desenha o fundo gradiente no painel de splash.
+     */
+    private static void desenharBackgroundGradiente(Graphics2D g2) {
+        try {
+            GradientPaint gp = new GradientPaint(0, 0, new Color(0x4CAF50), 0, 80, new Color(0x2E8B57));
+            g2.setPaint(gp);
+
+            int[] xPoints = {0, 70, 140};
+            int[] yPoints = {0, 80, 0};
+            g2.fillPolygon(xPoints, yPoints, 3);
+        } finally {
+            g2.dispose();
         }
     }
 
-    public static BufferedImage loadImage(String path) {
+    /**
+     * Configura o ícone da janela principal.
+     */
+    private static void configurarIconeJanela() {
+        BufferedImage imagemOriginal = carregarImagem("/logo.png");
+        if (imagemOriginal != null) {
+            Image imagemEscalada = imagemOriginal.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+            BufferedImage imagemRedimensionada = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = imagemRedimensionada.createGraphics();
+            g2d.drawImage(imagemEscalada, 0, 0, null);
+            g2d.dispose();
+            frame.setIconImage(imagemRedimensionada);
+        }
+    }
+
+    /**
+     * Carrega uma imagem de um caminho específico.
+     *
+     * @param caminho o caminho do recurso da imagem.
+     * @return a imagem carregada ou null em caso de falha.
+     */
+    public static BufferedImage carregarImagem(String caminho) {
         try {
-            return ImageIO.read(TelaPrincipal.class.getResource(path));
+            return ImageIO.read(TelaPrincipal.class.getResource(caminho));
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagem: " + e.getMessage());
             return null;
         }
     }
 
-    private static JDialog createDialog(JFrame parent, String title, JPanel content) {
-        JDialog dialog = new JDialog(parent, title, true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(parent);
-        dialog.getContentPane().add(content);
-        return dialog;
+    /**
+     * Cria um diálogo modal configurado.
+     *
+     * @param parent  a janela principal.
+     * @param titulo  o título do diálogo.
+     * @param conteudo o painel de conteúdo.
+     * @return o diálogo configurado.
+     */
+    private static JDialog criarDialogo(JFrame parent, String titulo, JPanel conteudo) {
+        JDialog dialogo = new JDialog(parent, titulo, true);
+        dialogo.setSize(400, 300);
+        dialogo.setLocationRelativeTo(parent);
+        dialogo.getContentPane().add(conteudo);
+        return dialogo;
     }
 
-    public static JButton criarBotao(String text) {
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(120, 24));
-        button.setMargin(new Insets(5, 10, 5, 10));
-        return button;
+    /**
+     * Cria um botão com as configurações padrão.
+     *
+     * @param texto o texto do botão.
+     * @return o botão configurado.
+     */
+    public static JButton criarBotao(String texto) {
+        JButton botao = new JButton(texto);
+        botao.setPreferredSize(new Dimension(120, 24));
+        botao.setMargin(new Insets(5, 10, 5, 10));
+        return botao;
     }
 }

@@ -4,134 +4,82 @@ import java.awt.*;
 
 public class GerenciadorAbas {
 
+    // Constantes de título e opções
     private static final String ABA_NOMENCLATURA_ARQUIVOS = "Nomenclatura de Arquivos";
     private static final String ABA_GERENCIAMENTO_PLANILHAS = "Gerenciamento de Planilhas";
-    private static final String ABA_ORGANIZACAO_PASTAS = "Gerenciamento de Pastas";
-
-    private static final String OPCAO_SUBSTITUICAO_SIMPLES = "Substituição Simples";
-    private static final String OPCAO_RENOMEAR_ORDENAR = "Renomear e Ordenar";
-    private static final String OPCAO_MESCLAGEM_PLANILHAS = "Mesclagem de Planilhas";
-    private static final String OPCAO_PROCESSAMENTO_AGITEL = "Processamento Agitel";
+    private static final String ABA_ORGANIZACAO_PASTAS = "Organização de Pastas";
 
     private static final Color TAB_SELECTED_COLOR = new Color(0xEB5E28);
-    private static final Font TAB_FONT = new Font("Arial", Font.PLAIN, 12);
+    private static final Font TAB_FONT = new Font("Arial", Font.PLAIN, 14);
 
     private JTabbedPane mainTabbedPane;
-    private JTabbedPane nomenclaturaTabbedPane;
-    private JTabbedPane planilhasTabbedPane;
     private JTextArea textAreaArquivos;
 
+    // Construtor principal
     public GerenciadorAbas(JTextArea textAreaArquivos) {
         this.textAreaArquivos = textAreaArquivos;
         configurarUI();
-        criarAbas();
+        criarAbasPrincipais();
     }
 
+    // Configuração inicial da interface
     private void configurarUI() {
         UIManager.put("TabbedPane.selected", TAB_SELECTED_COLOR);
-        UIManager.put("TabbedPane.tabInsets", new Insets(5, 10, 5, 10));
         UIManager.put("TabbedPane.font", TAB_FONT);
+        UIManager.put("TabbedPane.tabInsets", new Insets(5, 10, 5, 10));
     }
 
-    private void criarAbas() {
+    // Criação das abas principais
+    private void criarAbasPrincipais() {
         mainTabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+        mainTabbedPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        criarAbaNomenclaturaArquivos();
-        criarAbaGerenciamentoPlanilhas();
-        criarAbaOrganizacaoPastas();
-
-        mainTabbedPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        adicionarAba(ABA_NOMENCLATURA_ARQUIVOS, criarPainelNomenclatura());
+        adicionarAba(ABA_GERENCIAMENTO_PLANILHAS, criarPainelGerenciamentoPlanilhas());
+        adicionarAba(ABA_ORGANIZACAO_PASTAS, criarPainelOrganizacaoPastas());
     }
 
-    private void criarAbaNomenclaturaArquivos() {
-        JPanel panelNomenclatura = criarAba(ABA_NOMENCLATURA_ARQUIVOS, mainTabbedPane);
-        panelNomenclatura.setLayout(new GridBagLayout());
-        panelNomenclatura.setBorder(BorderFactory.createCompoundBorder(
-                new EmptyBorder(10, 10, 10, 10),
-                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)
-        ));
-
-        nomenclaturaTabbedPane = new JTabbedPane();
-        nomenclaturaTabbedPane.addTab(OPCAO_SUBSTITUICAO_SIMPLES, criarPainelSubstituicaoSimples());
-        nomenclaturaTabbedPane.addTab(OPCAO_RENOMEAR_ORDENAR, criarPainelRenomearOrdenar());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        panelNomenclatura.add(nomenclaturaTabbedPane, gbc);
+    // Adiciona uma aba ao painel principal
+    private void adicionarAba(String titulo, JPanel conteudo) {
+        mainTabbedPane.addTab(titulo, conteudo);
     }
 
-    private JPanel criarAbaGerenciamentoPlanilhas() {
-        JPanel panelPlanilhas = criarAba(ABA_GERENCIAMENTO_PLANILHAS, mainTabbedPane);
-        panelPlanilhas.setLayout(new GridBagLayout());
-        panelPlanilhas.setBorder(BorderFactory.createCompoundBorder(
-                new EmptyBorder(10, 10, 10, 10),
-                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)
-        ));
+    // Painel de Nomenclatura de Arquivos
+    private JPanel criarPainelNomenclatura() {
+        JTabbedPane subTabbedPane = new JTabbedPane();
+        subTabbedPane.addTab("Substituição Simples", new PainelSubstituicaoSimples(textAreaArquivos).criarPainel());
+        subTabbedPane.addTab("Renomear e Ordenar", new PainelRenomearOrdenar(textAreaArquivos).criarPainel());
 
-        planilhasTabbedPane = new JTabbedPane();
-        planilhasTabbedPane.addTab(OPCAO_MESCLAGEM_PLANILHAS, criarPainelMesclagemPlanilhas());
-        planilhasTabbedPane.addTab(OPCAO_PROCESSAMENTO_AGITEL, criarPainelProcessamentoAgitel());
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        panelPlanilhas.add(planilhasTabbedPane, gbc);
-        return panelPlanilhas;
+        return criarPainelComBorda(subTabbedPane);
     }
 
-    private void criarAbaOrganizacaoPastas() {
-        JPanel panelOrganizacaoPastas = criarAba(ABA_ORGANIZACAO_PASTAS, mainTabbedPane);
-        panelOrganizacaoPastas.setLayout(new GridBagLayout());
-        panelOrganizacaoPastas.setBorder(BorderFactory.createCompoundBorder(
-                new EmptyBorder(10, 10, 10, 10),
-                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)
-        ));
+    // Painel de Gerenciamento de Planilhas
+    private JPanel criarPainelGerenciamentoPlanilhas() {
+        JTabbedPane subTabbedPane = new JTabbedPane();
+        subTabbedPane.addTab("Mesclagem de Planilhas", new PainelMesclaPlanilha(textAreaArquivos).criarPainel());
+        subTabbedPane.addTab("Processamento Agitel", new PainelProcessamentoAgitel(textAreaArquivos).criarPainel());
 
+        return criarPainelComBorda(subTabbedPane);
+    }
+
+    // Painel de Organização de Pastas
+    private JPanel criarPainelOrganizacaoPastas() {
         JPanel painelOrganizacao = new PainelOrganizacaoPastas(textAreaArquivos).criarPainel();
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.fill = GridBagConstraints.BOTH;
-
-        panelOrganizacaoPastas.add(painelOrganizacao, gbc);
+        return criarPainelComBorda(painelOrganizacao);
     }
 
-    private JPanel criarPainelSubstituicaoSimples() {
-        return new PainelSubstituicaoSimples(textAreaArquivos).criarPainel();
-    }
-
-    private JPanel criarPainelRenomearOrdenar() {
-        return new PainelRenomearOrdenar(textAreaArquivos).criarPainel();
-    }
-
-    private JPanel criarPainelMesclagemPlanilhas() {
-        return new PainelMesclaPlanilha(textAreaArquivos).criarPainel();
-    }
-
-    private JPanel criarPainelProcessamentoAgitel() {
-        return new PainelProcessamentoAgitel(textAreaArquivos).criarPainel();
-    }
-
-    private JPanel criarAba(String titulo, JTabbedPane tabbedPane) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        tabbedPane.addTab(titulo, panel);
+    // Utilitário para criar painéis com borda padrão
+    private JPanel criarPainelComBorda(JComponent conteudo) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createCompoundBorder(
+                new EmptyBorder(10, 10, 10, 10),
+                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.GRAY)
+        ));
+        panel.add(conteudo, BorderLayout.CENTER);
         return panel;
     }
 
+    // Getter para o painel principal
     public JTabbedPane getMainTabbedPane() {
         return mainTabbedPane;
     }

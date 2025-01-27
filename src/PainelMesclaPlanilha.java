@@ -76,16 +76,6 @@ class PainelMesclaPlanilha {
         buttonSelecionar.setToolTipText("Clique para selecionar a pasta que deseja organizar");
         inputPanel.add(buttonSelecionar, gbc);
 
-//        // Campo Nome do Arquivo
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        inputPanel.add(new JLabel("Nome do arquivo:"), gbc);
-//
-//        gbc.gridx = 1;
-//        gbc.gridwidth = 2;
-//        textNovoNome = new JTextField(20);
-//        inputPanel.add(textNovoNome, gbc);
-
         // Campo Arquivo Base
         gbc.gridx = 0;
         gbc.gridy = 2;
